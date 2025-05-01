@@ -25,6 +25,7 @@ while true; do
   echo "  4) SPF Failure Finder"
   echo "  5) Linux Command Trainer"
   echo "  6) SPF Spoof Test"
+  echo "  7) Get Mail Client Settings"
   echo "  0) Exit"
   echo ""
   read -p "Enter your choice: " choice
@@ -65,6 +66,10 @@ while true; do
       ./spf_spoof_test.sh
       echo ""
       read -p "⚡ Press ENTER to return to Launchpad..." dummy
+      ;;
+    7)
+      clear
+      ./get_mail_settings.sh
       ;;
     0)
       echo ""

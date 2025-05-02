@@ -1,23 +1,23 @@
 #!/bin/bash
 
+# GhostOps Launchpad - Fully Styled & Updated
 clear
-
-# Matrix Intro
-echo -e "\e[1;34m"  # Kentucky Blue
-echo "██████╗  ██████╗  ██████╗ ███████╗████████╗"
-echo "██╔══██╗██╔═══██╗██╔═══██╗██╔════╝╚══██╔══╝"
-echo "██████╔╝██║   ██║██║   ██║███████╗   ██║   "
-echo "██╔═══╝ ██║   ██║██║   ██║╚════██║   ██║   "
-echo "██║     ╚██████╔╝╚██████╔╝███████║   ██║   "
-echo "╚═╝      ╚═════╝  ╚═════╝ ╚══════╝   ╚═╝   "
-echo -e "\e[0m"  # Reset color
-echo ""
-echo -e "\e[1;36m💻 Welcome to Ghost's Script Lair 💻\e[0m"
-sleep 2
+echo -e "\e[92m"
+cat << "EOF"
+██████╗  ██████╗  ██████╗ ███████╗████████╗
+██╔══██╗██╔═══██╗██╔════╝ ██╔════╝╚══██╔══╝
+██║  ██║██║   ██║██║  ███╗█████╗     ██║   
+██║  ██║██║   ██║██║   ██║██╔══╝     ██║   
+██████╔╝╚██████╔╝╚██████╔╝███████╗   ██║   
+╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝   ╚═╝   
+     👻 Welcome to the GhostOps Launchpad 👻
+EOF
+echo -e "\e[0m"
+sleep 1
 
 while true; do
-  clear
-  echo -e "\e[1;34mSelect a tool to run:\e[0m"
+  echo ""
+  echo "Select a tool to run:"
   echo ""
   echo "  1) Find IP Info (Batch Mode)"
   echo "  2) DNS Query Tool"
@@ -26,61 +26,51 @@ while true; do
   echo "  5) Linux Command Trainer"
   echo "  6) SPF Spoof Test"
   echo "  7) Get Mail Client Settings"
+  echo "  8) DNS & Host Health Checker"
+  echo "  9) Verify SMTP Connectivity"
+  echo " 10) Web Service Quick Test"
+  echo " 11) Packet Test Lab (Wireshark)"
+  echo " 12) GhostOps Notes Viewer"
+  echo " 13) Task Timer (Time Tracker)"
+  echo " 14) NOC Troubleshooting Assistant"
+  echo " 15) HTTP Status Checker"
+  echo " 16) System Info Report"
+  echo " 17) DNS Blacklist Check"
+  echo " 18) TCP Port Scanner"
+  echo " 19) WHOIS Lookup Tool"
+  echo " 20) AI Triage Assistant"
+  echo " 21) Log Error Grabber"
   echo "  0) Exit"
   echo ""
   read -p "Enter your choice: " choice
 
   case $choice in
-    1)
-      clear
-      ./find_ip_info_batch.sh
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
-    2)
-      clear
-      ./dns_query_tool.sh
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
-    3)
-      clear
-      ./email_flow_checker.sh
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
-    4)
-      clear
-      ./spf_failure_finder.sh
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
-    5)
-      clear
-      ./linux_command_trainer.sh
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
-    6)
-      clear
-      ./spf_spoof_test.sh
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
-    7)
-      clear
-      ./get_mail_settings.sh
-      ;;
-    0)
-      echo ""
-      echo "👋 Goodbye, Ghost."
-      exit 0
-      ;;
-    *)
-      echo ""
-      echo "❌ Invalid option. Try again."
-      echo ""
-      read -p "⚡ Press ENTER to return to Launchpad..." dummy
-      ;;
+    1) ./find_ip_info_batch.sh ;;
+    2) ./dns_query_tool.sh ;;
+    3) ./email_flow_checker.sh ;;
+    4) ./spf_failure_finder.sh ;;
+    5) ./linux_command_trainer.sh ;;
+    6) ./spf_spoof_test.sh ;;
+    7) ./get_mail_settings.sh ;;
+    8) ./domain_health_check.sh ;;
+    9) ./smtp_tester.sh ;;
+   10) ./web_quick_check.sh ;;
+   11) ./packet_lab.sh ;;
+   12) ./view_ghostnotes.sh ;;
+   13) ./timer_tool.sh ;;
+   14) ./statghost-cli.sh ;;
+   15) ./http_status_checker.sh ;;
+   16) ./sysinfo_report.sh ;;
+   17) ./blacklist_check.sh ;;
+   18) ./port_scanner.sh ;;
+   19) ./whois_lookup.sh ;;
+   20) ./ai_triage.sh ;;
+   21) ./log_error_grabber.sh ;;
+    0) echo "👻 Exiting GhostOps..."; sleep 1; break ;;
+    *) echo "❌ Invalid choice. Try again." ;;
   esac
+
+  echo ""
+  read -p "🔁 Press Enter to return to menu..."
+  clear
 done

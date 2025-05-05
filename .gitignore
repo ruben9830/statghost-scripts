@@ -1,0 +1,30 @@
+# 💀 GhostOps Repo Ignore Rules
+
+# Windows metadata
+*.Zone.Identifier
+
+# Backup & temp files
+*.old
+*.save
+*.bak
+*.tmp
+*~
+
+# Archives
+*.zip
+*.tar
+*.gz
+
+# System-specific
+.DS_Store
+Thumbs.db
+
+# Logs (optional)
+*.log
+
+# Python cache (just in case)
+__pycache__/
+*.pyc
+
+# Node/npm junk (if any)
+node_modules/

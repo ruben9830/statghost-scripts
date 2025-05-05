@@ -1,30 +1,20 @@
-# 💀 GhostOps Repo Ignore Rules
-
-# Windows metadata
-*.Zone.Identifier
-
-# Backup & temp files
-*.old
-*.save
-*.bak
-*.tmp
-*~
-
-# Archives
+# System/metadata noise
 *.zip
-*.tar
-*.gz
-
-# System-specific
-.DS_Store
-Thumbs.db
-
-# Logs (optional)
+*.zip:Zone.Identifier
+*.sh:Zone.Identifier
+*.md:Zone.Identifier
+*.save
+*.old
 *.log
+.DS_Store
 
-# Python cache (just in case)
-__pycache__/
-*.pyc
+# IDE/editor noise
+*.swp
+*.swo
+*.bak
 
-# Node/npm junk (if any)
-node_modules/
+# Audio previews
+ghost-dreamer.mp3
+
+# Secrets just in case
+*.env

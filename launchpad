@@ -1,21 +1,24 @@
 #!/bin/bash
 
-# GhostOps Launchpad – Spooky Edition
+# GhostOps Launchpad – Spooky Edition v2.1
 clear
 echo -e "\e[95m"
 
-# 🎵 Play spooky intro music (prefer ffplay, fallback to mpg123)
+# 🎵 Intro music with PID tracking
+MUSIC_PID=""
 if [[ -f ./ghost-dreamer.mp3 ]]; then
   if command -v ffplay &> /dev/null; then
     ffplay -nodisp -autoexit -volume 60 ./ghost-dreamer.mp3 >/dev/null 2>&1 &
+    MUSIC_PID=$!
   elif command -v mpg123 &> /dev/null; then
     mpg123 -q ./ghost-dreamer.mp3 &
+    MUSIC_PID=$!
   else
-    echo "🔇 No audio player (ffplay or mpg123) found. Skipping music..."
+    echo "🔇 No audio player found. Skipping music..."
   fi
 fi
 
-# 👻 Glowing animated ghost banner
+# 👻 Animated ghost banner
 for i in {1..3}; do
   echo -e "\e[5m"
   cat << "EOF"
@@ -46,7 +49,7 @@ cat << "EOF"
     ░        ░         ░ ░        ░  ░       ░      ░  ░░ ░
   ░                                                       ░
 
-        👻 Welcome to the GhostOps Launchpad - Powered by GhostCheck v1.0
+        👻 Welcome to the GhostOps Launchpad - Powered by GhostCheck v2.1
 EOF
 echo -e "\e[0m"
 sleep 1
@@ -63,69 +66,86 @@ while true; do
   echo "  4) DNS Blacklist Check"
   echo "  5) HTTP Status Checker"
   echo "  6) System Info Report"
-  echo "  7) TCP Port Scanner"
+  echo "  7) Network Path Analyzer (Traceroute+)"
+  echo "  8) TCP Port Scanner"
   echo ""
   echo "  📡 DNS & Mail Tools"
-  echo "  8) DNS Query Tool"
-  echo "  9) SPF Failure Finder"
-  echo " 10) SPF Spoof Test"
-  echo " 11) SPF IP Authorization Checker"
-  echo " 12) Get Mail Client Settings"
-  echo " 13) Full Mail Port Connectivity Test"
+  echo "  9) DNS Query Tool"
+  echo " 10) SPF Failure Finder"
+  echo " 11) SPF Spoof Test"
+  echo " 12) SPF IP Authorization Checker"
+  echo " 13) Get Mail Client Settings"
+  echo " 14) Full Mail Port Connectivity Test"
   echo ""
   echo "  🛠️ Web & Service Triage"
-  echo " 14) Web Service Quick Test"
-  echo " 15) Email Flow Checker"
-  echo " 16) Log Error Grabber"
-  echo " 17) AI Triage Assistant"
+  echo " 15) Web Service Quick Test"
+  echo " 16) Email Flow Checker"
+  echo " 17) Log Error Grabber"
+  echo " 18) AI Triage Assistant"
   echo ""
   echo "  🧪 Security & Packet Tools"
-  echo " 18) Packet Test Lab (Wireshark)"
-  echo " 19) TrapGhost – SNMP Trap Triage Tool"
-  echo " 20) DHCP Hunter Tool"
+  echo " 19) Packet Test Lab (Wireshark)"
+  echo " 20) TrapGhost – SNMP Trap Triage Tool"
+  echo " 21) DHCP Hunter Tool"
   echo ""
   echo "  📓 Utility & Training"
-  echo " 21) GhostOps Notes Viewer"
-  echo " 22) Linux Command Trainer"
-  echo " 23) Task Timer (Time Tracker)"
-  echo " 24) NOC Troubleshooting Assistant"
+  echo " 22) GhostOps Notes Viewer"
+  echo " 23) Linux Command Trainer"
+  echo " 24) Task Timer (Time Tracker)"
+  echo " 25) NOC Troubleshooting Assistant"
   echo ""
-  echo " 25) 🧠 Mail Full Diagnostic (advanced / standalone)"
+  echo " 26) 🧠 Mail Full Diagnostic (advanced / standalone)"
   echo ""
   echo "  0) Exit"
   echo ""
 
   read -p "Enter your choice: " choice
 
+  # 🔇 Kill music when any selection is made
+  if [[ -n "$MUSIC_PID" ]]; then
+    kill "$MUSIC_PID" 2>/dev/null
+    MUSIC_PID=""
+  fi
+
   case $choice in
     1)  ./find_ip_info_batch.sh ;;
     2)  ./whois_lookup.sh ;;
     3)  read -p "Enter domain to scan: " domain
-        ./domain_health_check.sh "$domain"
-        read -p "🔁 Press Enter to return to menu..." ;;
+        ./domain_health_check.sh "$domain" ;;
     4)  ./blacklist_check.sh ;;
     5)  ./http_status_checker.sh ;;
     6)  ./sysinfo_report.sh ;;
-    7)  ./port_scanner.sh ;;
-    8)  ./dns_query_tool.sh ;;
-    9)  ./spf_failure_finder.sh ;;
-   10)  ./spf_spoof_test.sh ;;
-   11)  ./spf_ip_checker.sh ;;
-   12)  ./mail_settings_report.sh ;;
-   13)  ./smtp_tester.sh ;;
-   14)  ./web_quick_check.sh ;;
-   15)  ./email_flow_checker.sh ;;
-   16)  ./log_error_grabber.sh ;;
-   17)  ./ai_triage.sh ;;
-   18)  ./packet_lab.sh ;;
-   19)  bash ./trapghost.sh --listen ;;
-   20)  ./dhcp_hunter.sh ;;  # DHCP search by IP/MAC/date
-   21)  ./view_ghostnotes.sh ;;
-   22)  ./linux_command_trainer.sh ;;
-   23)  ./timer_tool.sh ;;
-   24)  ./statghost-cli.sh ;;
-   25)  bash ./mail_full_diagnostic.sh ;;
-    0)  echo "👻 Exiting GhostOps..."; sleep 1; break ;;
+    7)  read -p "Enter a target (hostname or IP): " target
+        ./mtr_report.sh "$target" ;;
+    8)  ./port_scanner.sh ;;
+    9)  ./dns_query_tool.sh ;;
+   10)  ./spf_failure_finder.sh ;;
+   11)  ./spf_spoof_test.sh ;;
+   12)  ./spf_ip_checker.sh ;;
+   13)  ./mail_settings_report.sh ;;
+   14)  ./smtp_tester.sh ;;
+   15)  ./web_quick_check.sh ;;
+   16)  ./email_flow_checker.sh ;;
+   17)  ./log_error_grabber.sh ;;
+   18)  ./ai_triage.sh ;;
+   19)  ./packet_lab.sh ;;
+   20)  bash ./trapghost.sh --listen ;;
+   21)  ./dhcp_hunter.sh ;;
+   22)  ./view_ghostnotes.sh ;;
+   23)  ./linux_command_trainer.sh ;;
+   24)  ./timer_tool.sh ;;
+   25)  
+        while true; do
+          ./statghost-cli.sh
+          read -p "🔁 Run another NOC command? (y/n): " again
+          [[ "$again" =~ ^[Yy]$ ]] || break
+        done ;;
+   26)  bash ./mail_full_diagnostic.sh ;;
+    0)
+        echo "👻 Exiting GhostOps..."
+        [[ -n "$MUSIC_PID" ]] && kill "$MUSIC_PID" 2>/dev/null
+        sleep 1
+        break ;;
     *)  echo "❌ Invalid choice. Try again." ;;
   esac
 

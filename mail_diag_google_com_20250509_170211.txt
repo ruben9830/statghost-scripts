@@ -1,0 +1,36 @@
+
+==========================================
+🏠 Test Mode: Local
+==========================================
+
+🔍 Resolving MX records for google.com...
+✅ Found mail server: smtp.google.com
+
+🌐 DNS Record Check:
+-----------------------------
+64.233.185.101
+64.233.185.139
+64.233.185.113
+64.233.185.100
+64.233.185.138
+64.233.185.102
+10 smtp.google.com.
+"v=spf1 include:_spf.google.com ~all"
+
+🚪 Port Connectivity Test (Netcat):
+-----------------------------
+Port 110 (POP3 (STARTTLS))... ❌ Closed
+Port 143 (IMAP (STARTTLS))... ❌ Closed
+Port 25 (SMTP Plain/Relay)... ❌ Closed
+Port 465 (SMTP SSL)... ❌ Closed
+Port 587 (SMTP STARTTLS)... ❌ Closed
+Port 993 (IMAP SSL)... ❌ Closed
+Port 995 (POP3 SSL)... ❌ Closed
+
+🔐 TLS Check on Port 465:
+-----------------------------
+❌ Could not fetch TLS info
+
+📁 Full diagnostic saved to: mail_diag_google_com_20250509_170211.txt
+🧠 Source: Local 🏠
+🔁 Press Enter to return to menu...

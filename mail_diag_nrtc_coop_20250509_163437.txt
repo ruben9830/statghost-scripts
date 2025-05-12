@@ -1,0 +1,31 @@
+
+🔍 Resolving MX records for nrtc.coop...
+✅ Found mail server: nrtc-coop.mail.protection.outlook.com
+
+🌐 DNS Record Check:
+-----------------------------
+44.213.31.2
+54.235.137.107
+10 nrtc-coop.mail.protection.outlook.com.
+"v=spf1 include:_spf.sparkpostmail.com include:sent-via.netsuite.com include:mailsenders.netsuite.com include:_secondary.nrtc.coop ip4:184.185.77.146/32 include:spf.protection.outlook.com ~all"
+
+🚪 Port Connectivity Test (Netcat):
+-----------------------------
+Port 110 (POP3 (STARTTLS))... ❌ Closed
+Port 143 (IMAP (STARTTLS))... ❌ Closed
+Port 25 (SMTP Plain/Relay)... ❌ Closed
+Port 465 (SMTP SSL)... ❌ Closed
+Port 587 (SMTP STARTTLS)... ❌ Closed
+Port 993 (IMAP SSL)... ❌ Closed
+Port 995 (POP3 SSL)... ❌ Closed
+
+💡 Detected Microsoft Exchange Online Protection (EOP).
+   Ports are commonly closed to the public by design.
+   Use trusted relay IP or authenticated connection for deeper testing.
+
+🔐 TLS Check on Port 465:
+-----------------------------
+❌ Could not fetch TLS info
+
+📁 Full diagnostic saved to mail_diag_nrtc_coop_20250509_163437.txt
+🔁 Press Enter to return to menu...

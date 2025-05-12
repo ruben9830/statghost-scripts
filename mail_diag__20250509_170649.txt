@@ -1,0 +1,8 @@
+
+==========================================
+🏠 Test Mode: Local
+==========================================
+
+🔍 Resolving MX records for ...
+dig: '' is not a legal name (unexpected end of input)
+❌ No MX record found. Exiting.

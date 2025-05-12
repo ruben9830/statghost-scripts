@@ -1,0 +1,66 @@
+
+[1;34m[== Basic DNS Records ==][0m
+✅ [1;32mA: 74.125.21.102
+74.125.21.139
+74.125.21.100
+74.125.21.101
+74.125.21.138
+74.125.21.113[0m
+✅ [1;32mAAAA: 2607:f8b0:4002:c00::65
+2607:f8b0:4002:c00::8b
+2607:f8b0:4002:c00::71
+2607:f8b0:4002:c00::66[0m
+✅ [1;32mNS: ns1.google.com.,ns4.google.com. ns3.google.com.,ns2.google.com.[0m
+✅ [1;32mSOA: ns1.google.com. dns-admin.google.com. 755772331 900 900 1800 60[0m
+⚠️  [1;33mNo CNAME.[0m
+
+[1;34m[== MX Records ==][0m
+✅ [1;32mMX: 10 smtp.google.com.[0m
+
+[1;34m[== SPF ==][0m
+✅ [1;32mSPF: "v=spf1 include:_spf.google.com ~all"[0m
+
+[1;34m[== DMARC ==][0m
+✅ [1;32mDMARC: "v=DMARC1; p=reject; rua=mailto:mailauth-reports@google.com"[0m
+
+[1;34m[== PTR ==][0m
+✅ [1;32mPTR for 74.125.21.113: yv-in-f113.1e100.net.[0m
+
+[1;34m[== Blacklist Check ==][0m
+✅ [1;32mNot listed on zen.spamhaus.org[0m
+✅ [1;32mNot listed on bl.spamcop.net[0m
+✅ [1;32mNot listed on b.barracudacentral.org[0m
+
+[1;34m[== WHOIS ==][0m
+   Registrar WHOIS Server: whois.markmonitor.com
+   Registrar URL: http://www.markmonitor.com
+   Creation Date: 1997-09-15T04:00:00Z
+   Registry Expiry Date: 2028-09-14T04:00:00Z
+   Registrar: MarkMonitor Inc.
+   Registrar IANA ID: 292
+   Registrar Abuse Contact Email: abusecomplaints@markmonitor.com
+   Registrar Abuse Contact Phone: +1.2086851750
+   Name Server: NS1.GOOGLE.COM
+   Name Server: NS2.GOOGLE.COM
+   Name Server: NS3.GOOGLE.COM
+   Name Server: NS4.GOOGLE.COM
+registrar's sponsorship of the domain name registration in the registry is
+registrar.  Users may consult the sponsoring registrar's Whois database to
+view the registrar's reported date of expiration for this registration.
+Registrars.
+Registrar WHOIS Server: whois.markmonitor.com
+Registrar URL: http://www.markmonitor.com
+Creation Date: 1997-09-15T07:00:00+0000
+Registrar Registration Expiration Date: 2028-09-13T07:00:00+0000
+Registrar: MarkMonitor, Inc.
+Registrar IANA ID: 292
+Registrar Abuse Contact Email: abusecomplaints@markmonitor.com
+Registrar Abuse Contact Phone: +1.2086851750
+Name Server: ns2.google.com
+Name Server: ns3.google.com
+Name Server: ns4.google.com
+Name Server: ns1.google.com
+
+🎯 Scan complete for: [1;36mgoogle.com[0m
+
+📁 Log saved to: [1;36mlogs/google.com_2025-05-08_10-03-00.log[0m

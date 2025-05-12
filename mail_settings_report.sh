@@ -1,20 +1,26 @@
 #!/bin/bash
 
-# Usage: ./mail_settings_report.sh domain.com
-DOMAIN=$1
-EMAIL="you@$DOMAIN"
+# GhostOps Tool 12 — Mail Client Settings Report (Offline Config Only)
 
+clear
+echo -e "\e[95m📧 Mail Client Settings Report - GhostOps\e[0m"
+echo "--------------------------------------------------"
+
+read -p "Enter domain (e.g. example.com): " DOMAIN
+
+EMAIL="you@$DOMAIN"
 MAILHOST=$(dig +short MX $DOMAIN | sort | head -n1 | awk '{print $2}' | sed 's/\.$//')
 
 if [ -z "$MAILHOST" ]; then
   MAILHOST="mail.$DOMAIN"
 fi
 
-echo -e "\n📧 Mail Client Settings for $DOMAIN"
-echo "*********************************************************\n"
-
+echo ""
+echo "*********************************************************"
+echo ""
 echo "📥 Incoming Mail Server"
 echo "************************************"
+echo ""
 echo "---------"
 echo "IMAP"
 echo "---------"
@@ -32,11 +38,11 @@ echo "Port: 995"
 echo "Security Type: SSL/TLS"
 echo "U/N: USERNAME@$DOMAIN"
 echo "Host: $MAILHOST"
-
-echo -e "\n***************************************"
+echo ""
+echo "***************************************"
 echo "📤 Outgoing Mail Server (SMTP)"
 echo "***************************************"
-
+echo ""
 echo "Port: 587"
 echo "Security Type: STARTTLS"
 echo "U/N: USERNAME@$DOMAIN"
@@ -50,3 +56,6 @@ echo "Security Type: SSL/TLS"
 echo "U/N: USERNAME@$DOMAIN"
 echo "Host: $MAILHOST (or smtp.$DOMAIN)"
 echo "Outgoing server requires authentication?: Yes"
+echo ""
+echo "*********************************************************"
+read -p "Press Enter to return to menu..."

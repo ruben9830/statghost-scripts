@@ -35,13 +35,18 @@ done
 # Static banner
 echo -e "\e[92m"
 cat << "EOF"
-██████╗  ██████╗  ██████╗ ███████╗████████╗
-██╔══██╗██╔═══██╗██╔════╝ ██╔════╝╚══██╔══╝
-██║  ██║██║   ██║██║  ███╗█████╗     ██║
-██║  ██║██║   ██║██║   ██║██╔══╝     ██║
-██████╔╝╚██████╔╝╚██████╔╝███████╗   ██║
-╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝   ╚═╝
-     👻 Welcome to the GhostOps Launchpad 👻
+ ▓█████▄   ██▀███   ▒█████   ▄▄▄       ███▄ ▄███▓▓█████  ▄████▄
+ ▒██▀ ██▌ ▓██ ▒ ██▒▒██▒  ██▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀ ▒██▀ ▀█
+ ░██   █▌ ▓██ ░▄█ ▒▒██░  ██▒▒██  ▀█▄  ▓██    ▓██░▒███   ▒▓█    ▄
+ ░▓█▄   ▌ ▒██▀▀█▄  ▒██   ██░░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄ ▒▓▓▄ ▄██▒
+ ░▒████▓  ░██▓ ▒██▒░ ████▓▒░ ▓█   ▓██▒▒██▒   ░██▒░▒████▒▒ ▓███▀ ░
+  ▒▒▓  ▒  ░ ▒▓ ░▒▓░░ ▒░▒░▒░  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░░ ░▒ ▒  ░
+  ░ ▒  ▒    ░▒ ░ ▒░  ░ ▒ ▒░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░  ░  ▒
+  ░ ░  ░    ░░   ░ ░ ░ ░ ▒    ░   ▒   ░      ░      ░   ░
+    ░        ░         ░ ░        ░  ░       ░      ░  ░░ ░
+  ░                                                       ░
+
+        👻 Welcome to the GhostOps Launchpad - Powered by GhostCheck v1.0
 EOF
 echo -e "\e[0m"
 sleep 1
@@ -51,97 +56,77 @@ while true; do
   echo ""
   echo "Select a tool to run:"
   echo ""
+  echo "  🧠 Intelligence & Recon"
   echo "  1) Find IP Info (Batch Mode)"
-  echo "  2) DNS Query Tool"
-  echo "  3) Email Flow Checker"
-  echo "  4) SPF Failure Finder"
-  echo "  5) Linux Command Trainer"
-  echo "  6) SPF Spoof Test"
-  echo "  7) Get Mail Client Settings"
-  echo "  8) DNS & Host Health Checker"
-  echo "  9) Verify SMTP Connectivity"
-  echo " 10) Web Service Quick Test"
-  echo " 11) Packet Test Lab (Wireshark)"
-  echo " 12) GhostOps Notes Viewer"
-  echo " 13) Task Timer (Time Tracker)"
-  echo " 14) NOC Troubleshooting Assistant"
-  echo " 15) HTTP Status Checker"
-  echo " 16) System Info Report"
-  echo " 17) DNS Blacklist Check"
-  echo " 18) TCP Port Scanner"
-  echo " 19) WHOIS Lookup Tool"
-  echo " 20) AI Triage Assistant"
-  echo " 21) Log Error Grabber"
-  echo " 99) Run Self-Test (Verify All Tools)"
+  echo "  2) WHOIS Lookup Tool"
+  echo "  3) DNS & Host Health Checker"
+  echo "  4) DNS Blacklist Check"
+  echo "  5) HTTP Status Checker"
+  echo "  6) System Info Report"
+  echo "  7) TCP Port Scanner"
+  echo ""
+  echo "  📡 DNS & Mail Tools"
+  echo "  8) DNS Query Tool"
+  echo "  9) SPF Failure Finder"
+  echo " 10) SPF Spoof Test"
+  echo " 11) SPF IP Authorization Checker"
+  echo " 12) Get Mail Client Settings"
+  echo " 13) Full Mail Port Connectivity Test"
+  echo ""
+  echo "  🛠️ Web & Service Triage"
+  echo " 14) Web Service Quick Test"
+  echo " 15) Email Flow Checker"
+  echo " 16) Log Error Grabber"
+  echo " 17) AI Triage Assistant"
+  echo ""
+  echo "  🧪 Security & Packet Tools"
+  echo " 18) Packet Test Lab (Wireshark)"
+  echo " 19) TrapGhost – SNMP Trap Triage Tool"
+  echo " 20) DHCP Hunter Tool"
+  echo ""
+  echo "  📓 Utility & Training"
+  echo " 21) GhostOps Notes Viewer"
+  echo " 22) Linux Command Trainer"
+  echo " 23) Task Timer (Time Tracker)"
+  echo " 24) NOC Troubleshooting Assistant"
+  echo ""
+  echo " 25) 🧠 Mail Full Diagnostic (advanced / standalone)"
+  echo ""
   echo "  0) Exit"
   echo ""
 
   read -p "Enter your choice: " choice
 
   case $choice in
-    1) ./find_ip_info_batch.sh ;;
-    2) ./dns_query_tool.sh ;;
-    3) ./email_flow_checker.sh ;;
-    4) ./spf_failure_finder.sh ;;
-    5) ./linux_command_trainer.sh ;;
-    6) ./spf_spoof_test.sh ;;
-    7) ./get_mail_settings.sh ;;
-    8) ./domain_health_check.sh ;;
-    9) ./smtp_tester.sh ;;
-   10) ./web_quick_check.sh ;;
-   11) ./packet_lab.sh ;;
-   12) ./view_ghostnotes.sh ;;
-   13) ./timer_tool.sh ;;
-   14) ./statghost-cli.sh ;;
-   15) ./http_status_checker.sh ;;
-   16) ./sysinfo_report.sh ;;
-   17) ./blacklist_check.sh ;;
-   18) ./port_scanner.sh ;;
-   19) ./whois_lookup.sh ;;
-   20) ./ai_triage.sh ;;
-   21) ./log_error_grabber.sh ;;
-   99)
-     echo "🧪 Running Self-Test for All Tools..."
-     echo ""
-     tool_scripts=(
-       find_ip_info_batch.sh
-       dns_query_tool.sh
-       email_flow_checker.sh
-       spf_failure_finder.sh
-       linux_command_trainer.sh
-       spf_spoof_test.sh
-       get_mail_settings.sh
-       domain_health_check.sh
-       smtp_tester.sh
-       web_quick_check.sh
-       packet_lab.sh
-       view_ghostnotes.sh
-       timer_tool.sh
-       statghost-cli.sh
-       http_status_checker.sh
-       sysinfo_report.sh
-       blacklist_check.sh
-       port_scanner.sh
-       whois_lookup.sh
-       ai_triage.sh
-       log_error_grabber.sh
-     )
-     for script in "${tool_scripts[@]}"; do
-       if [ -f "$script" ]; then
-         if [ -x "$script" ]; then
-           echo "✅ $script found and executable"
-         else
-           echo "⚠️  $script found but not executable (run: chmod +x $script)"
-         fi
-       else
-         echo "❌ $script is missing"
-       fi
-     done
-     echo ""
-     read -p "🔁 Press Enter to return to menu..."
-     ;;
-    0) echo "👻 Exiting GhostOps..."; sleep 1; break ;;
-    *) echo "❌ Invalid choice. Try again." ;;
+    1)  ./find_ip_info_batch.sh ;;
+    2)  ./whois_lookup.sh ;;
+    3)  read -p "Enter domain to scan: " domain
+        ./domain_health_check.sh "$domain"
+        read -p "🔁 Press Enter to return to menu..." ;;
+    4)  ./blacklist_check.sh ;;
+    5)  ./http_status_checker.sh ;;
+    6)  ./sysinfo_report.sh ;;
+    7)  ./port_scanner.sh ;;
+    8)  ./dns_query_tool.sh ;;
+    9)  ./spf_failure_finder.sh ;;
+   10)  ./spf_spoof_test.sh ;;
+   11)  ./spf_ip_checker.sh ;;
+   12)  ./mail_settings_report.sh ;;
+   13)  ./smtp_tester.sh ;;
+   14)  ./web_quick_check.sh ;;
+   15)  ./email_flow_checker.sh ;;
+   16)  ./log_error_grabber.sh ;;
+   17)  ./ai_triage.sh ;;
+   18)  ./packet_lab.sh ;;
+   19)  bash ./trapghost.sh --listen ;;
+   20)  ./dhcp_hunter.sh ;;  # DHCP search by IP/MAC/date
+   21)  ./view_ghostnotes.sh ;;
+   22)  ./linux_command_trainer.sh ;;
+   23)  ./timer_tool.sh ;;
+   24)  ./statghost-cli.sh ;;
+   25)  bash ./mail_full_diagnostic.sh ;;
+    0)  echo "👻 Exiting GhostOps..."; sleep 1; break ;;
+    *)  echo "❌ Invalid choice. Try again." ;;
   esac
 
   echo ""

@@ -19,7 +19,10 @@ echo ""
 # Loop through each domain and run whois
 for domain in "${domains[@]}"; do
   echo -e "\e[93m▶ Checking $domain...\e[0m"
-  whois "$domain" | grep -Ei 'Domain Name:|Registrar:|Expiry|Expiration|Name Server:' | sed 's/^/   /'
+  echo "------------------------------------------------------"
+  
+  whois "$domain" | grep -Ei 'Domain Name:|Registrar:|Expiry|Expiration|Name Server:'
+  
   echo "------------------------------------------------------"
 done
 

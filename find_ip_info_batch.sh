@@ -1,50 +1,46 @@
 #!/bin/bash
 
-echo "👋 Welcome to the IP Subpoena Search Tool (Batch Mode)"
+# GhostOps Tool 1 — IP Subpoena Search Tool (Batch Mode)
+# Use after SSH'ing into a DHCP log server — falls back to public IP info if off-network
 
-# --- Ask how many IPs to process ---
+clear
+echo -e "\e[95m👋 Welcome to the IP Subpoena Search Tool (Batch Mode)\e[0m"
+echo "-------------------------------------------------------------"
+echo -e "⚠️  \e[93mNote: This tool is designed to be used AFTER SSH'ing into a network with access to DHCP logs.\e[0m"
+echo -e "   Expected path: \e[94m/var/log/dhcp.*.gz\e[0m\n"
+
 read -p "How many IPs do you need to search? " count
+echo
 
-# --- Loop through each IP ---
-for ((i=1; i<=count; i++))
-do
-  echo ""
-  echo "🔹 Processing IP #$i"
-
+for ((i=1; i<=count; i++)); do
+  echo -e "🔹 Processing IP #$i"
   read -p "Enter the IP address: " ip
-  read -p "Enter the date (MM-DD-YYYY): " input_date
+  read -p "Enter the date (MM-DD-YYYY): " date
+  echo -e "Finding DHCP log for $date..."
 
-  # Break down the date
-  month=$(echo $input_date | cut -d'-' -f1)
-  day=$(echo $input_date | cut -d'-' -f2)
-  year=$(echo $input_date | cut -d'-' -f3)
+  log_file=$(ls /var/log/dhcp.*"$date"*.gz 2>/dev/null | head -n 1)
 
-  # Fix single-digit day
-  if [[ "$day" == 0* ]]; then
-    day="${day:1}"
+  if [[ -f "$log_file" ]]; then
+    echo -e "\e[92m📄 Found $log_file — scanning for $ip...\e[0m"
+    zgrep "$ip" "$log_file" || echo -e "\e[90mNo matches found for $ip.\e[0m"
+  else
+    echo -e "\e[91m❌ No DHCP log found for $date.\e[0m"
+    echo -e "\e[93m🌍 Running public IP info lookup as fallback...\e[0m"
+    
+    # Public fallback using ip-api.com
+    response=$(curl -s "http://ip-api.com/json/$ip")
+
+    status=$(echo "$response" | jq -r '.status')
+    if [[ "$status" == "success" ]]; then
+      echo -e "\n📡 \e[96mPublic IP Info for $ip:\e[0m"
+      echo "$response" | jq -r '
+        "🛰️  ISP: \(.isp)\n🔧 Org: \(.org)\n🌍 Country: \(.country)\n🏙️  City: \(.city)\n📍 Lat/Lon: \(.lat), \(.lon)\n🔒 ASN: \(.as)\n🌐 Reverse DNS: \(.reverse)"'
+    else
+      echo -e "\e[90m⚠️ Public lookup failed or returned no data.\e[0m"
+    fi
   fi
-
-  # Find correct DHCP log
-  echo "Finding DHCP log for $input_date..."
-  files=$(ls -lh --time-style=long-iso /var/log/dhcp.*.gz | grep "$year-$month" | awk '{print $8,$9}')
-  dhcp_file=$(echo "$files" | awk -v d="$year-$month-$day" '$1 ~ d {print $2}' | head -n1)
-
-  if [ -z "$dhcp_file" ]; then
-    echo "❌ No DHCP log found for $input_date. Skipping this IP."
-    continue
-  fi
-
-  echo "✅ Found: $dhcp_file"
-  echo "🔎 Searching for IP: $ip ..."
-  echo ""
-
-  # Search and show results
-  zgrep "$ip" "$dhcp_file"
-
-  echo ""
-  echo "✅ Done with IP #$i"
-  echo "----------------------------------------"
+  echo
 done
 
-echo "🏁 All IPs processed. Copy your raw pulls above for your ticket!"
-
+echo -e "\e[92m🏁 All IPs processed. Copy your raw pulls above for your ticket!\e[0m"
+read -p "🔁 Press Enter to return to the menu..."

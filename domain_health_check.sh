@@ -139,3 +139,19 @@ echo -e "\\n---------------------------------------------------"
 echo -e "📊 Summary: ✅ $PASS Passed   ❌ $FAIL Failed   ⚠️ $WARN Warnings"
 read -p "📂 Open log now? (y/n): " openlog
 [[ "$openlog" =~ ^[Yy]$ ]] && less "$LOGFILE"
+
+# Hosting Status Add-on from GhostCheck
+echo -e "\n[== Hosting Status Check ==]"
+ghostcheck_tool="$HOME/GhostCheck/tools/check_hosting_status.sh"
+hosting_config="$HOME/GhostCheck/config/hosting_patterns.conf"
+
+if [[ ! -f "$ghostcheck_tool" ]]; then
+    echo "⚠️  GhostCheck tool not found at: $ghostcheck_tool"
+    echo "💡 Tip: Clone or sync GhostCheck repo to ~/GhostCheck"
+elif [[ ! -f "$hosting_config" ]]; then
+    echo "⚠️  Hosting config not found at: $hosting_config"
+    echo "💡 Tip: Create this file with a list of authoritative DNS patterns (e.g. nrtc.net)"
+else
+    "$ghostcheck_tool" "$DOMAIN"
+fi
+

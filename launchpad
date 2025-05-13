@@ -111,7 +111,8 @@ while true; do
     1)  ./find_ip_info_batch.sh ;;
     2)  ./whois_lookup.sh ;;
     3)  read -p "Enter domain to scan: " domain
-        ./domain_health_check.sh "$domain" ;;
+        ~/scripts/domain_health_check.sh "$domain"
+        read -p "🔁 Press Enter to return to menu..." ;;
     4)  ./blacklist_check.sh ;;
     5)  ./http_status_checker.sh ;;
     6)  ./sysinfo_report.sh ;;

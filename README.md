@@ -1,97 +1,91 @@
-# 🧠 StatGhost Scripts Toolkit
-
-```bash
    ███████╗████████╗ █████╗ ████████╗ ██████╗  ██████╗ ███████╗████████╗
    ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝╚══██╔══╝
    ███████╗   ██║   ███████║   ██║   ██║   ██║██║  ███╗█████╗     ██║
    ╚════██║   ██║   ██╔══██║   ██║   ██║   ██║██║   ██║██╔══╝     ██║
    ███████║   ██║   ██║  ██║   ██║   ╚██████╔╝╚██████╔╝███████╗   ██║
    ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝   ╚═╝
-Built by Ruben Valencia for elite NOC ops, server triage, and rapid diagnostics.
+Built by Ruben Daniel Valencia Jr for elite NOC ops, server triage, and rapid diagnostics.  
 Portable, fast, and battle-tested for Ubuntu/WSL-based systems.
 
+---
 
+## 🎃 What’s New in v2.1
 
+- ✅ Centralized `require_tools()` via `ghostops_helpers.sh`
+- 🔍 `ghostcheck_qamode.sh`: QA self-test script for tool validation
+- 🛠️ Full SPF Toolkit refactor (spoof/IP/failure)
+- 🔁 Standardized headers across all scripts
+- 🧪 MTR Report: Visual traceroute analyzer (`mtr_report.sh`)
 
+---
 
-🎃 What's New (Launchpad 2.0)
-👻 Spooky GhostOps Edition with glowing ASCII banner and MP3 intro support
+## 🚀 Tool Index
 
-🔎 Tool 20 – DHCP Hunter: Search leases by IP, MAC, or date on RADs
+| Script                        | Description                                                  |
+|-------------------------------|--------------------------------------------------------------|
+| `launchpad`                   | 👻 Main launcher with banner, sound, and tool menu           |
+| `statghost-cli.sh`            | Interactive CLI assistant (DNS, AI, email, logs)             |
+| `find_ip_info_batch.sh`       | Batch DHCP lookup by IP/date – subpoena-style                |
+| `dhcp_hunter.sh`              | Search DHCP leases by IP, MAC, or date on RADs               |
+| `dns_query_tool.sh`           | One-click `dig`, `nslookup`, `host` diagnostic               |
+| `domain_health_check.sh`      | DNS + WHOIS recon with SPF/DMARC checks                      |
+| `email_flow_checker.sh`       | IMAP/SMTP connectivity tester                                |
+| `mail_settings_report.sh`     | Fetch mail config via DNS (Thunderbird, Outlook)             |
+| `mail_full_diagnostic.sh`     | Full mail port checker using openssl                         |
+| `spf_failure_finder.sh`       | Search logs for SPF/DKIM failures                            |
+| `spf_spoof_test.sh`           | Simulate spoof attempts for SPF testing                      |
+| `spf_ip_checker.sh`           | Verify IP authorization via SPF TXT                          |
+| `linux_command_trainer.sh`    | Randomized Bash quiz/training shell                          |
+| `http_status_checker.sh`      | Grab HTTP status codes from a URL list                       |
+| `web_quick_check.sh`          | Basic web service tester (URL, DNS, port)                    |
+| `log_error_grabber.sh`        | Grep + timestamped error log extractor                       |
+| `trapghost.sh`                | SNMP Trap listener and logger                                |
+| `rbl_check.sh`                | Email blacklist (RBL) checker                                |
+| `port_scanner.sh`             | Simple TCP port scanner using `nc`                           |
+| `mtr_report.sh`               | 📡 Visual traceroute+ analyzer using MTR                     |
+| `timer_tool.sh`               | ⏱️ Task timer / time tracker                                  |
+| `view_ghostnotes.sh`          | Viewer for markdown-based NOC field notes                    |
+| `ticketghost.sh`              | Ticket assistant: grep + summary tool                        |
+| `ticketghost_summary_exporter.py` | Ticket summary generator in Python                       |
+| `statghost-log-viewer.sh`     | Visual log viewer for tool usage                             |
+| `whois_lookup.sh`             | WHOIS checker for domains/IPs                                |
+| `ai_triage.sh`                | AI-assisted troubleshooting recommender                      |
 
-🧪 New Tools Added:
+---
 
-mail_full_diagnostic.sh – Full standalone mail port check
+##Requirements
 
-trapghost.sh – SNMP trap logger
+- **Bash** 4+
+- **Ubuntu / WSL / Debian**
+- Tools used across scripts:  
+  `curl`, `dig`, `whois`, `jq`, `less`, `grep`, `awk`, `mtr`, `host`, `nc`, `openssl`, `snmptrapd`, `howdoi`, `tldr`
 
-timer_tool.sh – Simple time tracker
+> Install all core dependencies:
+sudo apt install curl dig whois jq less grep awk mtr host netcat openssl snmptrapd howdoi tldr
 
-web_quick_check.sh – Basic HTTP checker
+A Mode
+Run this to validate all tools before push or deploy:
+./ghostcheck_qamode.sh
+Checks for:
 
-rbl_check.sh – Email blacklist (RBL) scan
+Script validity
 
-ticketghost_summary_exporter.py – Summarize ticket logs
+Missing require_tools
 
-🛠 Improved Tool Ordering and Menu Polish
+Missing dependencies
 
-🚀 Included Tools
-Script Name	Description
-launchpad	👻 Spooky launcher w/ ghost banner, sound, and tool selector
-statghost-cli.sh	Menu-based CLI assistant (DNS, email, TLS, AI, logs)
-find_ip_info_batch.sh	Batch DHCP lookup by IP/date — subpoena-style trace
-dhcp_hunter.sh	🔍 Tool 20: Search DHCP leases by IP, MAC, or date
-dns_query_tool.sh	One-click dig, nslookup, and host diagnostics
-domain_health_check.sh	DNS + WHOIS recon with GeoIP, SPF/DMARC checks
-email_flow_checker.sh	IMAP/SMTP flow test for any mailserver
-mail_settings_report.sh	Fetch Outlook/Thunderbird config via DNS
-mail_full_diagnostic.sh	Full standalone mail port diagnostic
-spf_failure_finder.sh	Scan logs for SPF/DKIM auth failures
-spf_spoof_test.sh	Simulate spoofing to test SPF config
-spf_ip_checker.sh	Check IP authorization in SPF TXT records
-linux_command_trainer.sh	Interactive Bash quiz with randomness
-http_status_checker.sh	Grab HTTP status codes from endpoints
-web_quick_check.sh	Quick triage for web services
-log_error_grabber.sh	Parse log files for timestamped errors
-trapghost.sh	SNMP Trap listener (Tool 19)
-rbl_check.sh	Email RBL blacklist checker
-port_scanner.sh	TCP port scanner
-timer_tool.sh	⏱️ Track time on tasks
-view_ghostnotes.sh	Viewer for markdown-based field notes
-ticketghost.sh	Ticket assistant for summaries + searches
-ticketghost_summary_exporter.py	Python script to generate ticket summaries
-statghost-log-viewer.sh	Visual log viewer for tool usage
-whois_lookup.sh	Simple WHOIS tool
-ai_triage.sh	AI-based triage recommender
+Executable flags
 
-🛠 Requirements
-Bash 4+
-
-Ubuntu / WSL / Debian-based system
-
-Tools: curl, dig, whois, jq, less, grep
-
-Optional: ffplay or mpg123 for spooky music, ollama, tldr, howdoi
-
-📦 Quick Start
-bash
-Copy
-Edit
+Quick Start
 git clone https://github.com/ruben9830/statghost-scripts.git
 cd statghost-scripts
-chmod +x *
-./launchpad
-🎥 Demo
-
-
-Optional: Use Peek or asciinema to generate and embed a real demo above.
+chmod +x *./launchpad
 
 👤 Author
-Ruben Valencia
+Ruben Daniel Valencia Jr.
 📍 Georgetown, KY
-🎓 Data Science MS Student | 🖥️ NOC Technician | 🧠 CLI Wizard
-🔗 LinkedIn Profile
+🎓 Data Science MS Student | 🧠 CLI Wizard
 💡 "Automate or die trying."
 
-© 2025 Ruben Valencia
-Licensed under the MIT License
+License
+MIT License – © 2025 Ruben Valencia

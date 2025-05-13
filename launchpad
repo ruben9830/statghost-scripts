@@ -95,6 +95,7 @@ while true; do
   echo " 25) NOC Troubleshooting Assistant"
   echo ""
   echo " 26) 🧠 Mail Full Diagnostic (advanced / standalone)"
+  echo " 27) 📧 Phishing Header Trace Tool"
   echo ""
   echo "  0) Exit"
   echo ""
@@ -142,6 +143,7 @@ while true; do
           [[ "$again" =~ ^[Yy]$ ]] || break
         done ;;
    26)  bash ./mail_full_diagnostic.sh ;;
+   27) bash ~/GhostCheck/tools/ghost_trace_header.sh ;;
     0)
         echo "👻 Exiting GhostOps..."
         [[ -n "$MUSIC_PID" ]] && kill "$MUSIC_PID" 2>/dev/null

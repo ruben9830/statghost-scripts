@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools dig openssl
+
 echo "📧 Email Flow Checker"
 
 read -p "Enter the SMTP server to test (e.g., mail.example.com): " smtp_server

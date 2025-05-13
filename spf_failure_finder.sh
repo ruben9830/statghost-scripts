@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools grep
+
 # GhostOps Tool 9 — SPF/DKIM Failure Finder (SSH-Required Version)
 
 clear

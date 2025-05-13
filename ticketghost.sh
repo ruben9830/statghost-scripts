@@ -10,6 +10,9 @@
 # ✅ NEW: Shows "no change" if run manually
 # ===============================================
 
+source ./ghostops_helpers.sh
+require_tools grep awk sed
+
 API_KEY="your_api_key_here"
 SERVER_URL="https://servicedesk.nrtc.coop"
 LAST_ID_FILE="$HOME/.ticketghost_lastid"

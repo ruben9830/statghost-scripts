@@ -1,6 +1,8 @@
 #!/bin/bash
 # Tool 7 – Network Path Analyzer (Traceroute+)
 # Smart MTR wrapper that summarizes loss and latency
+source ./ghostops_helpers.sh
+require_tools mtr bc
 
 TARGET="$1"
 COUNT="${2:-10}"

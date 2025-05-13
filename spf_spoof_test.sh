@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools dig
+
 echo "📬 SPF Spoof Test Helper"
 echo ""
 echo "This guide will help you manually test if a domain is protected against email spoofing."

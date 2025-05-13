@@ -1,6 +1,9 @@
 #!/bin/bash
 # TrapGhost - SNMP Trap Triage Tool
 
+source ./ghostops_helpers.sh
+require_tools snmptrapd
+
 INTERFACE="any"
 PORT=162
 KEYWORD=""

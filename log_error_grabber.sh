@@ -1,6 +1,9 @@
 #!/bin/bash
 # log_error_grabber.sh — Scan logs for recent errors or failures
 
+source ./ghostops_helpers.sh
+require_tools grep awk
+
 clear
 echo -e "\e[91m📄 Log Error Grabber\e[0m"
 echo "------------------------------------------------------"

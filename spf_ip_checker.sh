@@ -13,6 +13,9 @@
 #
 # ===============================================
 
+source ./ghostops_helpers.sh
+require_tools dig host
+
 # Requirements
 if ! command -v dig >/dev/null 2>&1 || ! command -v host >/dev/null 2>&1; then
   echo "❌ Requires 'dig' and 'host'. Install with: sudo apt install dnsutils"

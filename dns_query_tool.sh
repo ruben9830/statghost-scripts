@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools dig nslookup
+
 echo "🌐 DNS Query Tool"
 
 read -p "Enter the domain or IP to query: " target

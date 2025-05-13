@@ -1,6 +1,9 @@
 #!/bin/bash
 # port_scanner.sh — Simple TCP port scanner using bash and nc
 
+source ./ghostops_helpers.sh
+require_tools nc
+
 clear
 echo -e "\e[96m📡 Port Scanner (Top 20 TCP Ports)\e[0m"
 echo "------------------------------------------------------"

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools curl dig howdoi tldr
+
 # StatGhost CLI Assistant — Fully Upgraded with Smart Clipboard Support
 
 LOGFILE="$HOME/statghost_usage.log"

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools dig whois jq
+
+
 clear
 
 BANNER="

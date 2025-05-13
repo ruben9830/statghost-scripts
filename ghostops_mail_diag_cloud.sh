@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ./ghostops_helpers.sh
+require_tools openssl
+
 ZONE="us-central1-a"
 INSTANCE_NAME="ghostops-maildiag"
 SCRIPT_NAME="mail_full_diagnostic.sh"

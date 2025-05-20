@@ -1,26 +1,24 @@
 #!/bin/bash
 
 source ./ghostops_helpers.sh
-require_tools dig whois jq
-
+require_tools dig whois jq curl
 
 clear
 
 BANNER="
- ▓█████▄   ██▀███   ▒█████   ▄▄▄       ███▄ ▄███▓▓█████  ▄████▄  
- ▒██▀ ██▌ ▓██ ▒ ██▒▒██▒  ██▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀ ▒██▀ ▀█  
- ░██   █▌ ▓██ ░▄█ ▒▒██░  ██▒▒██  ▀█▄  ▓██    ▓██░▒███   ▒▓█    ▄ 
+ ▓█████▄   ██▀███   ▒█████   ▄▄▄       ███▄ ▄███▓▓█████  ▄████▄
+ ▒██▀ ██▌ ▓██ ▒ ██▒▒██▒  ██▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀ ▒██▀ ▀█
+ ░██   █▌ ▓██ ░▄█ ▒▒██░  ██▒▒██  ▀█▄  ▓██    ▓██░▒███   ▒▓█    ▄
  ░▓█▄   ▌ ▒██▀▀█▄  ▒██   ██░░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄ ▒▓▓▄ ▄██▒
  ░▒████▓  ░██▓ ▒██▒░ ████▓▒░ ▓█   ▓██▒▒██▒   ░██▒░▒████▒▒ ▓███▀ ░
   ▒▒▓  ▒  ░ ▒▓ ░▒▓░░ ▒░▒░▒░  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░░ ░▒ ▒  ░
-  ░ ▒  ▒    ░▒ ░ ▒░  ░ ▒ ▒░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░  ░  ▒   
-  ░ ░  ░    ░░   ░ ░ ░ ░ ▒    ░   ▒   ░      ░      ░   ░        
-    ░        ░         ░ ░        ░  ░       ░      ░  ░░ ░      
-  ░                                                       ░      
+  ░ ▒  ▒    ░▒ ░ ▒░  ░ ▒ ▒░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░  ░  ▒
+  ░ ░  ░    ░░   ░ ░ ░ ░ ▒    ░   ▒   ░      ░      ░   ░
+    ░        ░         ░ ░        ░  ░       ░      ░  ░░ ░
+  ░                                                       ░
 
-        GhostCheck v1.0  |  Domain Recon Tool by GhostOps
+        GhostCheck v1.1  |  Domain Recon Tool by GhostOps
 "
-
 
 echo "$BANNER"
 
@@ -34,7 +32,7 @@ if [[ "$1" == "--help" ]]; then
 fi
 
 if [[ "$1" == "--version" ]]; then
-  echo "GhostCheck v1.0 by Ruben Valencia"
+  echo "GhostCheck v1.1 by Ruben Valencia"
   exit 0
 fi
 
@@ -57,34 +55,41 @@ FAIL=0
 WARN=0
 
 print_section() { echo -e "\n\033[1;34m[== $1 ==]\033[0m"; }
-
 print_good() { echo -e "✅ \033[1;32m$1\033[0m"; ((PASS++)); }
 print_warn() { echo -e "⚠️  \033[1;33m$1\033[0m"; ((WARN++)); }
 print_bad()  { echo -e "❌ \033[1;31m$1\033[0m"; ((FAIL++)); }
 
 print_section "Basic DNS Records"
 
-# 🔍 A Record + Geo IP + ASN + Flag
 A_RECORDS=( $(dig +short A $DOMAIN) )
 if [[ ${#A_RECORDS[@]} -eq 0 ]]; then
   print_bad "No A Record"
 else
   for IP in "${A_RECORDS[@]}"; do
-    RESPONSE=$(curl -s https://ipinfo.io/$IP/json)
-    COUNTRY=$(echo "$RESPONSE" | jq -r '.country')
-    REGION=$(echo "$RESPONSE" | jq -r '.region')
-    CITY=$(echo "$RESPONSE" | jq -r '.city')
-    ORG=$(echo "$RESPONSE" | jq -r '.org')
+    RESPONSE=$(curl -s --max-time 5 https://ipinfo.io/$IP/json)
 
-    # Convert country code to emoji flag
-    FLAG=$(echo "$COUNTRY" | awk '{for(i=1;i<=length;i++) printf "\\U1F1" toupper(substr($0,i,1)); print ""}' | sed 's/\\U1F1/\\U1F1E/g')
+    # If ipinfo fails, fall back to ip-api
+    if [[ -z "$RESPONSE" || "$RESPONSE" == "{}" || "$RESPONSE" == *"error"* ]]; then
+      echo "⚠️ ipinfo.io failed, falling back to ip-api.com..."
+      RESPONSE=$(curl -s --max-time 5 http://ip-api.com/json/$IP)
+      COUNTRY=$(echo "$RESPONSE" | jq -r '.countryCode')
+      REGION=$(echo "$RESPONSE" | jq -r '.regionName')
+      CITY=$(echo "$RESPONSE" | jq -r '.city')
+      ORG=$(echo "$RESPONSE" | jq -r '.isp')
+    else
+      COUNTRY=$(echo "$RESPONSE" | jq -r '.country')
+      REGION=$(echo "$RESPONSE" | jq -r '.region')
+      CITY=$(echo "$RESPONSE" | jq -r '.city')
+      ORG=$(echo "$RESPONSE" | jq -r '.org')
+    fi
 
-    [[ "$COUNTRY" == "null" || -z "$COUNTRY" ]] && COUNTRY="🌐" && FLAG="🌐"
+    # Clean up nulls
+    [[ "$COUNTRY" == "null" || -z "$COUNTRY" ]] && COUNTRY="?"
     [[ "$REGION" == "null" ]] && REGION="?"
     [[ "$CITY" == "null" ]] && CITY="?"
     [[ "$ORG" == "null" ]] && ORG="?"
 
-    print_good "A Record: $IP  $FLAG $COUNTRY - $REGION, $CITY  🛰️ $ORG"
+    print_good "A Record: $IP  [$COUNTRY] $REGION, $CITY  🛰️ $ORG"
   done
 fi
 
@@ -131,16 +136,12 @@ whois $DOMAIN | grep -Ei "Registrar|Creation Date|Expiry|Name Server"
 echo -e "\n🎯 Scan complete for: \033[1;36m$DOMAIN\033[0m"
 echo -e "\n📁 Log saved to: \033[1;36m$LOGFILE\033[0m"
 
-# End logging
 exec &>/dev/tty
-
-# Final summary + optional log view
 echo -e "\\n---------------------------------------------------"
 echo -e "📊 Summary: ✅ $PASS Passed   ❌ $FAIL Failed   ⚠️ $WARN Warnings"
 read -p "📂 Open log now? (y/n): " openlog
 [[ "$openlog" =~ ^[Yy]$ ]] && less "$LOGFILE"
 
-# Hosting Status Add-on from GhostCheck
 echo -e "\n[== Hosting Status Check ==]"
 ghostcheck_tool="$HOME/GhostCheck/tools/check_hosting_status.sh"
 hosting_config="$HOME/GhostCheck/config/hosting_patterns.conf"
@@ -150,8 +151,7 @@ if [[ ! -f "$ghostcheck_tool" ]]; then
     echo "💡 Tip: Clone or sync GhostCheck repo to ~/GhostCheck"
 elif [[ ! -f "$hosting_config" ]]; then
     echo "⚠️  Hosting config not found at: $hosting_config"
-    echo "💡 Tip: Create this file with a list of authoritative DNS patterns (e.g. nrtc.net)"
+    echo "💡 Tip: Create this file with a list of known hosting orgs"
 else
-    "$ghostcheck_tool" "$DOMAIN"
+    bash "$ghostcheck_tool" "$DOMAIN"
 fi
-

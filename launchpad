@@ -72,7 +72,7 @@ while true; do
   echo "  📡 DNS & Mail Tools"
   echo "  9) DNS Query Tool"
   echo " 10) SPF Failure Finder"
-  echo " 11) SPF Spoof Test"
+  echo " 11) Spoofability Scanner (SPF/DKIM/DMARC)"
   echo " 12) SPF IP Authorization Checker"
   echo " 13) Get Mail Client Settings"
   echo " 14) Full Mail Port Connectivity Test"
@@ -94,20 +94,21 @@ while true; do
   echo " 24) Task Timer (Time Tracker)"
   echo " 25) NOC Troubleshooting Assistant"
   echo ""
-  echo " 26) 🧠 Mail Full Diagnostic (advanced / standalone)"
-  echo " 27) 📧 Phishing Header Trace Tool"
+  echo " 26) Mail Full Diagnostic (advanced / standalone)"
+  echo " 27) Phishing Header Trace Tool"
+  echo " 28) RAD Recon: DNS & DHCP Search"
+  echo " 29) DHCP Triage Assistant"
+  echo " 30) Send Spoofed Email (Swaks Wrapper)"
   echo ""
   echo "  0) Exit"
   echo ""
 
   read -p "Enter your choice: " choice
-
   # 🔇 Kill music when any selection is made
   if [[ -n "$MUSIC_PID" ]]; then
     kill "$MUSIC_PID" 2>/dev/null
     MUSIC_PID=""
   fi
-
   case $choice in
     1)  ./find_ip_info_batch.sh ;;
     2)  ./whois_lookup.sh ;;
@@ -122,10 +123,10 @@ while true; do
     8)  ./port_scanner.sh ;;
     9)  ./dns_query_tool.sh ;;
    10)  ./spf_failure_finder.sh ;;
-   11)  ./spf_spoof_test.sh ;;
+   11)  ./ghost_spoofhunt.sh ;;
    12)  ./spf_ip_checker.sh ;;
    13)  ./mail_settings_report.sh ;;
-   14)  ./smtp_tester.sh ;;
+   14)  bash ~/scripts/smtp_tester.sh ;;
    15)  ./web_quick_check.sh ;;
    16)  ./email_flow_checker.sh ;;
    17)  ./log_error_grabber.sh ;;
@@ -144,6 +145,20 @@ while true; do
         done ;;
    26)  bash ./mail_full_diagnostic.sh ;;
    27) bash ~/GhostCheck/tools/ghost_trace_header.sh ;;
+   28)
+   	 read -p "Enter search term for DNS/DHCP: " searchterm
+   	 ghost_radsearch.sh "$searchterm"
+   	 read -p $'\n🔁 Press Enter to return to menu...'
+   	 ;;
+   29)
+        clear
+        echo "🧠 GhostOps Tool 29: DHCP Triage Assistant"
+        echo "-----------------------------------------"
+        ghosttriage
+        echo ""
+        read -p "🔁 Press Enter to return to menu..."
+        ;;
+   30)  ghost_spoof_send.sh ;;
     0)
         echo "👻 Exiting GhostOps..."
         [[ -n "$MUSIC_PID" ]] && kill "$MUSIC_PID" 2>/dev/null
@@ -151,7 +166,6 @@ while true; do
         break ;;
     *)  echo "❌ Invalid choice. Try again." ;;
   esac
-
   echo ""
   read -p "🔁 Press Enter to return to menu..."
   clear

@@ -1,8 +1,9 @@
 #!/bin/bash
-# Tool 7 – Network Path Analyzer (Traceroute+)
-# Smart MTR wrapper that summarizes loss and latency
-source ./ghostops_helpers.sh
-require_tools mtr bc
+# Tool 7 – Network Path Analyzer (Traceroute+GeoIP)
+# By GhostOps | Requires: mtr, curl, jq, bc
+
+source "$(dirname "$0")/ghostops_helpers.sh"
+require_tools mtr bc curl jq
 
 TARGET="$1"
 COUNT="${2:-10}"
@@ -10,20 +11,6 @@ COUNT="${2:-10}"
 if [[ -z "$TARGET" ]]; then
   echo "Usage: $0 <target-hostname-or-IP> [packet-count]"
   echo "Example: $0 google.com 10"
-  exit 1
-fi
-
-# 🔍 Dependency check
-MISSING=()
-for tool in mtr bc; do
-  if ! command -v "$tool" &> /dev/null; then
-    MISSING+=("$tool")
-  fi
-done
-
-if [[ ${#MISSING[@]} -gt 0 ]]; then
-  echo -e "\e[91m❌ Missing required tools: ${MISSING[*]}\e[0m"
-  echo "Please install with: sudo apt install ${MISSING[*]}"
   exit 1
 fi
 
@@ -55,4 +42,38 @@ done
 
 [[ "$WARNINGS" -eq 0 ]] && echo "✅ No significant packet loss or latency detected."
 
-rm -f /tmp/mtr_output.txt
+# Ask to show Route Map
+echo ""
+read -p "🗺️  Show route map with GeoIP info? (y/n): " showmap
+[[ "$showmap" =~ ^[Yy]$ ]] || { rm -f /tmp/mtr_output.txt; exit 0; }
+
+echo -e "\n🌍 Route Map to $TARGET"
+echo "-------------------------------------------"
+
+awk '!/^ *HOST/ {print $NF}' /tmp/mtr_output.txt | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' | sort -u > /tmp/mtr_ips.txt
+
+while read -r ip; do
+  [[ -z "$ip" ]] && continue
+
+  geo=$(curl -s "http://ip-api.com/json/$ip")
+  status=$(echo "$geo" | jq -r '.status')
+
+  if [[ "$status" != "success" ]]; then
+    echo "⛔ $ip – Lookup failed"
+    continue
+  fi
+
+  city=$(echo "$geo" | jq -r '.city // "?"')
+  region=$(echo "$geo" | jq -r '.regionName // "?"')
+  country=$(echo "$geo" | jq -r '.country // "?"')
+  asn=$(echo "$geo" | jq -r '.as // "?"')
+  isp=$(echo "$geo" | jq -r '.isp // "?"')
+  cc=$(echo "$geo" | jq -r '.countryCode // "US"')
+
+  # Convert country code to emoji flag
+  flag=$(echo "$cc" | awk '{printf("%c%c", 0x1F1E6 + index("ABCDEFGHIJKLMNOPQRSTUVWXYZ", substr($0,1,1)) - 1, 0x1F1E6 + index("ABCDEFGHIJKLMNOPQRSTUVWXYZ", substr($0,2,1)) - 1)}')
+
+  echo "🌐 $ip – $city, $region, $country $flag | $asn | $isp"
+done < /tmp/mtr_ips.txt
+
+rm -f /tmp/mtr_output.txt /tmp/mtr_ips.txt

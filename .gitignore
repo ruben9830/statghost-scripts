@@ -18,3 +18,4 @@ ghost-dreamer.mp3
 
 # Secrets just in case
 *.env
+*.txt
